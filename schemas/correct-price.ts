@@ -5,7 +5,7 @@ export const CorrectPriceTestSchema = z.object({
     entryDate: z.string(),
     exitDate: z.string(),
     expectedPrice: z.coerce.number(),
-    testName: z.string()
+    testName: z.string(),
 });
 
 export type CorrectPriceTest = z.infer<typeof CorrectPriceTestSchema>;

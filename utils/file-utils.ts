@@ -1,22 +1,21 @@
-import xlsx from "xlsx"
-import fs from "fs"
+import xlsx from "xlsx";
+import fs from "fs";
 import { ZodType, z } from "zod";
 
-
 export function loadExcel<T>(filePath: string, schema: ZodType<T>): T[] {
-  const workbook = xlsx.read(fs.readFileSync(filePath));
-  const sheet = workbook.Sheets[workbook.SheetNames[0]];
+    const workbook = xlsx.read(fs.readFileSync(filePath));
+    const sheet = workbook.Sheets[workbook.SheetNames[0]];
 
-  const rawRows = xlsx.utils.sheet_to_json(sheet);
+    const rawRows = xlsx.utils.sheet_to_json(sheet);
 
-  return rawRows.map((row, index) => {
-    const result = schema.safeParse(row);
-    if (!result.success) {
-      throw new Error(
-        `Invalid test data in ${filePath} (row ${index + 2}):\n` +
-        JSON.stringify(z.treeifyError(result.error), null, 2)
-      );
-    }
-    return result.data;
-  });
+    return rawRows.map((row, index) => {
+        const result = schema.safeParse(row);
+        if (!result.success) {
+            throw new Error(
+                `Invalid test data in ${filePath} (row ${index + 2}):\n` +
+                    JSON.stringify(z.treeifyError(result.error), null, 2),
+            );
+        }
+        return result.data;
+    });
 }
