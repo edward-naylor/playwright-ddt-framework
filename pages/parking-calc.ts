@@ -17,7 +17,7 @@ export class ParkingCalc {
     }
 
     async goTo() {
-        await this.page.goto("https://www.shino.de/parkcalc/");
+        await this.page.goto("/parkcalc/");
     }
 
     async selectParkingLot(parkingLot: string) {
