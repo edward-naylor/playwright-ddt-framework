@@ -5,6 +5,7 @@ import { CorrectPriceTestSchema } from "../schemas/correct-price";
 import path from "path";
 
 const correctPriceTests = loadExcel(path.join(process.env.DATA_PATH ?? "", process.env.TEST_EXCEL_FILE_NAME ?? ""),
+    "CorrectPriceTests",
     CorrectPriceTestSchema,
 );
 
