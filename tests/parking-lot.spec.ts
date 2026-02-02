@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { loadExcel } from "../utils/file-utils";
 import { ParkingCalc } from "../pages/parking-calc";
-import { CorrectPriceTestSchema } from "../entities/correct-price";
+import { CorrectPriceTestSchema } from "../schemas/correct-price";
 
 const correctPriceTests = loadExcel("./test-data/garages.xlsx", CorrectPriceTestSchema);
 
