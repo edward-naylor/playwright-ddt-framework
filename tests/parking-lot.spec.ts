@@ -5,13 +5,11 @@ import { ParkingCalc } from "../pages/parking-calc";
 const data = await FileUtils.readExcelFile("./test-data/garages.xlsx");
 
 data.forEach((record) => {
-    console.log(record);
     test(record.testName, async ({ page }) => {
         const parkCalc = new ParkingCalc(page);
         await page.goto("https://www.shino.de/parkcalc/")
-        if (record.carPark) {
-            console.log(record.garage)
-            await parkCalc.selectParkingLot(record.carPark);
+        if (record.parkingLot) {
+            await parkCalc.selectParkingLot(record.parkingLot);
         }
         if (record.entryDate) {
             await parkCalc.inputEntryDate(record.entryDate);
@@ -23,6 +21,5 @@ data.forEach((record) => {
         if (record.expectedPrice) {
             await expect(page.getByText("$ " + record.expectedPrice)).toBeVisible();
         }
-        
     })
 });
