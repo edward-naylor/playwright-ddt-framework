@@ -1,25 +1,18 @@
 import { expect, test } from "@playwright/test";
-import { FileUtils } from "../utils/file-utils";
+import { loadExcel } from "../utils/file-utils";
 import { ParkingCalc } from "../pages/parking-calc";
+import { CorrectPriceTestSchema } from "../entities/correct-price";
 
-const data = await FileUtils.readExcelFile("./test-data/garages.xlsx");
+const correctPriceTests = loadExcel("./test-data/garages.xlsx", CorrectPriceTestSchema);
 
-data.forEach((record) => {
-    test(record.testName, async ({ page }) => {
+correctPriceTests.forEach((correctPriceTest) => {
+    test(correctPriceTest.testName, async ({ page }) => {
         const parkCalc = new ParkingCalc(page);
         await parkCalc.goTo();
-        if (record.parkingLot) {
-            await parkCalc.selectParkingLot(record.parkingLot);
-        }
-        if (record.entryDate) {
-            await parkCalc.inputEntryDate(record.entryDate);
-        }
-        if (record.exitDate) {
-            await parkCalc.inputExitDate(record.exitDate);
-        }
+        await parkCalc.selectParkingLot(correctPriceTest.parkingLot);
+        await parkCalc.inputEntryDate(correctPriceTest.entryDate);
+        await parkCalc.inputExitDate(correctPriceTest.exitDate);
         await parkCalc.calculateButton.click();
-        if (record.expectedPrice) {
-            await expect(page.getByText("$ " + record.expectedPrice)).toBeVisible();
-        }
-    })
+        await expect(page.getByText("$ " + correctPriceTest.expectedPrice)).toBeVisible();
+    });
 });
