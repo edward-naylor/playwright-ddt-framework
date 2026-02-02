@@ -2,9 +2,9 @@ import { expect, test } from "@playwright/test";
 import { loadExcel } from "../utils/file-utils";
 import { ParkingCalc } from "../pages/parking-calc";
 import { CorrectPriceTestSchema } from "../schemas/correct-price";
+import path from "path";
 
-const correctPriceTests = loadExcel(
-    "./test-data/garages.xlsx",
+const correctPriceTests = loadExcel(path.join(process.env.DATA_PATH ?? "", process.env.TEST_EXCEL_FILE_NAME ?? ""),
     CorrectPriceTestSchema,
 );
 
