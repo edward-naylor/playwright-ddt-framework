@@ -3,7 +3,10 @@ import { loadExcel } from "../utils/file-utils";
 import { ParkingCalc } from "../pages/parking-calc";
 import { CorrectPriceTestSchema } from "../schemas/correct-price";
 
-const correctPriceTests = loadExcel("./test-data/garages.xlsx", CorrectPriceTestSchema);
+const correctPriceTests = loadExcel(
+    "./test-data/garages.xlsx",
+    CorrectPriceTestSchema,
+);
 
 correctPriceTests.forEach((correctPriceTest) => {
     test(correctPriceTest.testName, async ({ page }) => {
@@ -13,6 +16,8 @@ correctPriceTests.forEach((correctPriceTest) => {
         await parkCalc.inputEntryDate(correctPriceTest.entryDate);
         await parkCalc.inputExitDate(correctPriceTest.exitDate);
         await parkCalc.calculateButton.click();
-        await expect(page.getByText("$ " + correctPriceTest.expectedPrice)).toBeVisible();
+        await expect(
+            page.getByText("$ " + correctPriceTest.expectedPrice),
+        ).toBeVisible();
     });
 });

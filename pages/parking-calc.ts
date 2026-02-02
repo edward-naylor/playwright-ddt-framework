@@ -1,7 +1,6 @@
 import { Locator, Page } from "playwright";
 import { expect } from "playwright/test";
 
-
 export class ParkingCalc {
     readonly page: Page;
     readonly parkingLotSelection: Locator;
@@ -20,7 +19,7 @@ export class ParkingCalc {
     async goTo() {
         await this.page.goto("https://www.shino.de/parkcalc/");
     }
-    
+
     async selectParkingLot(parkingLot: string) {
         await expect(this.parkingLotSelection).toBeVisible();
         await this.parkingLotSelection.selectOption(parkingLot);
