@@ -17,6 +17,10 @@ export class ParkingCalc {
         this.calculateButton = page.getByRole("button", { name: "Calculate" });
     }
 
+    async goTo() {
+        await this.page.goto("https://www.shino.de/parkcalc/");
+    }
+    
     async selectParkingLot(parkingLot: string) {
         await expect(this.parkingLotSelection).toBeVisible();
         await this.parkingLotSelection.selectOption(parkingLot);

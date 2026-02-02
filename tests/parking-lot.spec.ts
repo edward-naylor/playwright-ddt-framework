@@ -7,7 +7,7 @@ const data = await FileUtils.readExcelFile("./test-data/garages.xlsx");
 data.forEach((record) => {
     test(record.testName, async ({ page }) => {
         const parkCalc = new ParkingCalc(page);
-        await page.goto("https://www.shino.de/parkcalc/")
+        await parkCalc.goTo();
         if (record.parkingLot) {
             await parkCalc.selectParkingLot(record.parkingLot);
         }
